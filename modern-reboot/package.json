@@ -1,0 +1,14 @@
+{
+  "name": "path-modern",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspaces --if-present",
+    "build:packages": "npm run build --workspace=packages/core && npm run build --workspace=packages/logic"
+  }
+}

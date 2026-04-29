@@ -1,0 +1,86 @@
+{
+  "id": "1770219466117",
+  "title": "vatafa",
+  "description": "shneine",
+  "tags": [
+    "pepe"
+  ],
+  "status": "active",
+  "nodes": [
+    {
+      "id": "1770219466180",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:25:02.899Z",
+      "position": {
+        "x": 9982,
+        "y": 9595
+      },
+      "color": "#4a9eff",
+      "connections": []
+    },
+    {
+      "id": "1770227090331",
+      "title": "New Node",
+      "description": "",
+      "completed": true,
+      "createdAt": "2026-04-24T22:25:02.899Z",
+      "position": {
+        "x": 9537,
+        "y": 9717
+      },
+      "color": "#4a9eff",
+      "connections": []
+    },
+    {
+      "id": "1770227090334",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:25:02.899Z",
+      "position": {
+        "x": 10183,
+        "y": 9770
+      },
+      "color": "#4a9eff",
+      "connections": []
+    },
+    {
+      "id": "1770227092622",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:25:02.899Z",
+      "position": {
+        "x": 9847,
+        "y": 9770
+      },
+      "color": "#4a9eff",
+      "connections": []
+    },
+    {
+      "id": "1770227097715",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:25:02.899Z",
+      "position": {
+        "x": 9575,
+        "y": 10175
+      },
+      "color": "#4a9eff",
+      "connections": []
+    }
+  ],
+  "createdAt": "2026-02-04T15:37:46.117Z",
+  "lastOpened": "2026-02-09T11:29:37.899Z",
+  "fileSize": 0,
+  "updatedAt": "2026-04-24T22:25:02.950Z",
+  "previewUrl": "/previews/preview_1770224857613_zwizfh.png",
+  "previewMeta": {
+    "x": 50,
+    "y": 50,
+    "scale": 1
+  }
+}

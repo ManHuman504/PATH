@@ -1,0 +1,33 @@
+{
+  "name": "path-sharp",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "engine/*",
+    "modules/*",
+    "plugins/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@path/web",
+    "build": "npm run build --workspaces",
+    "test:e2e:modules": "node tools/e2e-modules.js",
+    "test:e2e:plugins": "node tools/e2e-plugins.js",
+    "test:e2e:recovery": "node tools/e2e-recovery.js",
+    "test:api": "node tools/test-api.js",
+    "test:stress:commands": "node tools/stress-commands.js",
+    "test:stress:events": "node tools/stress-events.js",
+    "test:stress:modules": "node tools/stress-modules.js",
+    "test:stress:restart": "node tools/stress-restart.js",
+    "perf:startup": "node tools/perf-startup.js",
+    "perf:memory": "node tools/perf-memory.js",
+    "perf:events": "node tools/perf-events.js",
+    "test:minimal-engine": "node tools/minimal-engine.js",
+    "audit:layering": "node tools/audit-layering.js",
+    "audit:types": "node tools/audit-types.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0"
+  }
+}

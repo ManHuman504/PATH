@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PathEngine 3D - Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden;
+      background: #000;
+    }
+    
+    #viewport {
+      width: 100vw;
+      height: 100vh;
+    }
+    
+    .controls-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(20, 20, 30, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      color: white;
+      min-width: 280px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+    }
+    
+    .controls-panel h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #4fc3f7;
+    }
+    
+    .control-group {
+      margin-bottom: 16px;
+    }
+    
+    .control-group label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #aaa;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.danger {
+      background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+    }
+    
+    .info-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(20, 20, 30, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px 20px;
+      color: white;
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      z-index: 1000;
+    }
+    
+    .info-panel div {
+      margin-bottom: 4px;
+    }
+    
+    .info-panel span {
+      color: #4fc3f7;
+      font-weight: 600;
+    }
+    
+    /* Стили для контента нод */
+    .node-content-custom {
+      padding: 12px;
+    }
+    
+    .node-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #4fc3f7;
+    }
+    
+    .node-description {
+      font-size: 13px;
+      color: #ccc;
+      line-height: 1.4;
+    }
+    
+    .loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+      z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewport"></div>
+  
+  <div class="loading" id="loading">Loading PathEngine...</div>
+  
+  <div class="controls-panel">
+    <h2>🎮 Controls</h2>
+    
+    <div class="control-group">
+      <button id="addNode">+ Add Random Node</button>
+      <button id="addCustomNode">+ Add Custom Node</button>
+      <button class="danger" id="clearNodes">Clear All Nodes</button>
+    </div>
+    
+    <div class="control-group">
+      <label>Camera Controls:</label>
+      <small style="color: #888; display: block; line-height: 1.4;">
+        • Mouse drag - Pan<br>
+        • Scroll - Zoom<br>
+        • Drag nodes to move
+      </small>
+    </div>
+  </div>
+  
+  <div class="info-panel">
+    <div>Nodes: <span id="nodeCount">0</span></div>
+    <div>FPS: <span id="fps">60</span></div>
+    <div>Status: <span id="status">Ready</span></div>
+  </div>
+  
+  <script type="module">
+    // Этот файл использует ES modules
+    // В production версии нужно будет собрать через bundler
+    
+    // Симуляция модуля (в реальности будет import из скомпилированных файлов)
+    console.log('PathEngine Demo Starting...');
+    
+    // После компиляции TypeScript и установки зависимостей:
+    // import { initPathEngine } from './dist/index.js';
+    
+    const loadingEl = document.getElementById('loading');
+    const viewportEl = document.getElementById('viewport');
+    const nodeCountEl = document.getElementById('nodeCount');
+    const fpsEl = document.getElementById('fps');
+    const statusEl = document.getElementById('status');
+    
+    let engine = null;
+    let nodeCounter = 0;
+    
+    // FPS counter
+    let lastFrameTime = performance.now();
+    let fps = 60;
+    
+    function updateFPS() {
+      const now = performance.now();
+      const delta = now - lastFrameTime;
+      fps = Math.round(1000 / delta);
+      fpsEl.textContent = fps;
+      lastFrameTime = now;
+      requestAnimationFrame(updateFPS);
+    }
+    
+    // Инструкции по использованию
+    loadingEl.innerHTML = `
+      <div style="text-align: center; max-width: 500px;">
+        <h2 style="margin-bottom: 16px;">📦 PathEngine Ready</h2>
+        <p style="color: #aaa; line-height: 1.6;">
+          To run this demo:<br><br>
+          1. Install dependencies: <code style="color: #4fc3f7;">npm install</code><br>
+          2. Build the module: <code style="color: #4fc3f7;">npm run build</code><br>
+          3. Serve this file with a local server<br><br>
+          Then uncomment the import statements in the script.
+        </p>
+        <button onclick="this.parentElement.remove()" 
+                style="margin-top: 20px; padding: 12px 24px; background: #4fc3f7; border: none; border-radius: 6px; color: white; cursor: pointer; font-size: 14px;">
+          Got it!
+        </button>
+      </div>
+    `;
+    
+    // Псевдо-инициализация для демонстрации структуры
+    console.log('Demo structure loaded. Ready to integrate with compiled module.');
+    statusEl.textContent = 'Waiting for build...';
+    
+    // Event listeners для кнопок
+    document.getElementById('addNode').addEventListener('click', () => {
+      console.log('Add random node clicked');
+      statusEl.textContent = 'Node creation pending';
+    });
+    
+    document.getElementById('addCustomNode').addEventListener('click', () => {
+      console.log('Add custom node clicked');
+      statusEl.textContent = 'Custom node pending';
+    });
+    
+    document.getElementById('clearNodes').addEventListener('click', () => {
+      console.log('Clear all nodes clicked');
+      nodeCountEl.textContent = '0';
+      statusEl.textContent = 'Cleared';
+    });
+    
+    updateFPS();
+    
+    // Примеры функций для работы с engine после инициализации:
+    
+    /* 
+    function addRandomNode() {
+      const x = (Math.random() - 0.5) * 10;
+      const y = (Math.random() - 0.5) * 10;
+      
+      const node = engine.createNode({
+        position: { x, y, z: 0 },
+        html: `
+          <div class="node-content-custom">
+            <div class="node-title">Node ${++nodeCounter}</div>
+            <div class="node-description">
+              Random position: (${x.toFixed(2)}, ${y.toFixed(2)})
+            </div>
+          </div>
+        `,
+        color: Math.random() * 0xffffff
+      });
+      
+      updateNodeCount();
+      statusEl.textContent = 'Node added';
+    }
+    
+    function addCustomNode() {
+      const node = engine.createNode({
+        position: { x: 0, y: 0, z: 0 },
+        html: `
+          <div class="node-content-custom">
+            <div class="node-title">⭐ Custom Node</div>
+            <div class="node-description">
+              This is a custom styled node with interactive content.
+            </div>
+          </div>
+        `,
+        width: 250,
+        height: 120,
+        color: 0x9c27b0
+      });
+      
+      updateNodeCount();
+      statusEl.textContent = 'Custom node added';
+    }
+    
+    function clearAllNodes() {
+      const nodes = engine.getNodes();
+      nodes.forEach(node => engine.removeNode(node));
+      nodeCounter = 0;
+      updateNodeCount();
+      statusEl.textContent = 'All cleared';
+    }
+    
+    function updateNodeCount() {
+      nodeCountEl.textContent = engine.getNodes().length;
+    }
+    */
+  </script>
+</body>
+</html>

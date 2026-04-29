@@ -1,0 +1,28 @@
+{
+  "name": "@path/nodes-3d",
+  "version": "1.0.0",
+  "description": "Independent 3D node system based on Three.js with hybrid rendering",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "three.js",
+    "nodes",
+    "3d",
+    "webgl",
+    "graph"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.160.0",
+    "@tweenjs/tween.js": "^25.0.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.160.0",
+    "typescript": "^5.3.3"
+  }
+}

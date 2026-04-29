@@ -1,0 +1,40 @@
+{
+  "nodes_hub": {
+    "quick_chain_mode": true,
+    "grid_display": true,
+    "highlight_active_nodes": true,
+    "autosave_nodes": true
+  },
+  "developer": {
+    "clear_cache": false,
+    "ui_debug_mode": false,
+    "engine_logs": true
+  },
+  "modules_plugins": {
+    "dependency_check": true,
+    "active_extensions": [
+      "hub-ui",
+      "nodes-3d-ui"
+    ],
+    "active_modules": [
+      "path-module",
+      "node-module",
+      "hub-module",
+      "year-module"
+    ],
+    "sequence_editor": {
+      "enabled": false,
+      "auto_create": true,
+      "auto_connect": true
+    }
+  },
+  "general": {
+    "reset_settings": false,
+    "language": "en",
+    "theme": "dark"
+  },
+  "achievements": {
+    "display_difficulty": true,
+    "show_notifications": true
+  }
+}

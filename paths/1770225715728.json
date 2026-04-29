@@ -1,0 +1,41 @@
+{
+  "id": "1770225715728",
+  "title": "смсм",
+  "description": "",
+  "tags": [],
+  "status": "active",
+  "previewUrl": "",
+  "previewMeta": null,
+  "nodes": [
+    {
+      "id": "node-1777068946359",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:41:41.215Z",
+      "position": {
+        "x": 45.30061413222681,
+        "y": 84.09655776120249
+      },
+      "color": "#55b3ff",
+      "connections": []
+    },
+    {
+      "id": "node-1777070452004",
+      "title": "New Node",
+      "description": "",
+      "completed": false,
+      "createdAt": "2026-04-24T22:41:41.215Z",
+      "position": {
+        "x": 261.62946663524747,
+        "y": 65.8517040457105
+      },
+      "color": "#55b3ff",
+      "connections": []
+    }
+  ],
+  "createdAt": "2026-02-04T17:21:55.728Z",
+  "lastOpened": "2026-02-04T17:21:55.729Z",
+  "fileSize": 0,
+  "updatedAt": "2026-04-24T22:41:45.224Z"
+}
